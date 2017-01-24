@@ -23,10 +23,18 @@ gulp install
 gulp
 ```
 
-1. Dùng browser vào http://localhost:3000, ấn vào link [Danh sách điệp viên CIA](http://localhost:3000/secret). Do người dùng chưa
-có web token nên form login ở http://localhost:3001 sẽ hiện ra.
+1. Dùng browser vào http://localhost:3000, đăng nhập với một trong các tài khoản:
+    - admin/admin
+    - test/test
+    - minh/minh
 
 2. Người dùng đăng nhập, ứng dụng này chỉ demo nên chỉ có 2 tài khoản [test, test] và [admin, admin]. Nếu login thành công, auth sẽ
 post webtoken vào http://localhost:3000/callback, sau đó trả web token cho người dùng rồi chuyển hướng đến http://localhost:3000/secret
 
-3. Với web token, người dùng sẽ truy cập được http://localhost:3000/secret
+3. Với web token, người dùng sẽ truy cập được http://localhost:3000/secret hoặc http://localhost:3002 với điều kiện localhost:3002 cho phép CORS
+
+# CORS là gì?
+
+Ở microservice bank, có các request từ các server khác domain do đó phải bật CORS.
+- [https://npmjs.org/package/cors](https://github.com/expressjs/cors)
+
