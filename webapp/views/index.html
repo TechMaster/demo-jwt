@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CIA Agents</title>
+  <script type="text/javascript" src="/public/js/getprotectedresource.js"></script>
+</head>
+<body>
+<h1>CIA Agent Secret</h1>
+{% if login %}
+  you logged in as <b>{{ name }}</b> <br>
+  <img src='http://localhost:3001/avatar/{{ avatar }}'><br><br>
+  <b><a href="javascript:getListCIAagent()">List of CIA agents</a></b>
+  <ul id="agents">
+  </ul>
+  <b><a href="">Password of top billionares in the world</a></b> (Call to other micro-service)<br><br>
+  <button onclick="window.location.href ='/logout'">Logout</button>
+{% else %}
+  <b>Login to get list of CIA agents</b>
+  <form method="POST" action="/">
+    username: <input type="text" name="name"><br/>
+    password: <input type="text" name="password">
+    <input type="submit" value="Login">
+  </form>
+{% endif %}
+
+{% if token %}
+  <script>
+    sessionStorage.token = '{{ token }}';
+  </script>
+{% endif %}
+
+<script>
+  function getListCIAagent() {
+
+    postProtected('/secret', {}, function (response) {
+
+      var ul = document.getElementById("agents");
+      ul.innerHTML = '';
+      for (var i = 0; i < response.length; i++) {
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(response[i].name));
+        ul.appendChild(li);
+      }
+
+    });
+  }
+</script>
+</body>
+</html>
