@@ -1,0 +1,25 @@
+{
+  "name": "bank",
+  "version": "1.0.0",
+  "description": "Demo bank microservice",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha -S"
+  },
+  "dependencies": {
+    "body-parser": "^1.16.0",
+    "cors": "^2.8.1",
+    "express": "^4.14.0",
+    "jsonwebtoken": "^7.2.1",
+    "lodash": "^4.17.4",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.2.1",
+    "request": "^2.79.0"
+  },
+  "keywords": [
+    "microservice"
+  ],
+  "author": "Trịnh Minh Cường",
+  "license": "MIT"
+}

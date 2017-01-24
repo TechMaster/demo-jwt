@@ -36,9 +36,9 @@ function npm_install(path) {
   run_command('npm', ['install', '--prefix', path]);
 }
 
-gulp.task('default', ['start_auth', 'start_webapp']);
+gulp.task('default', ['start_auth', 'start_bank', 'start_webapp']);
 
-gulp.task('install', ['install_auth', 'install_webapp']);
+gulp.task('install', ['install_auth', 'install_bank', 'install_webapp']);
 
 //-------- Running app using npm start
 gulp.task('start_auth', () => {
@@ -48,6 +48,10 @@ gulp.task('start_auth', () => {
 gulp.task('start_webapp', () => {
   npm_start("../webapp/");
 });
+
+gulp.task('start_bank', () => {
+  npm_start("../bank/");
+});
 //-------- Installation using npm install -----------
 gulp.task('install_auth', () => {
   npm_install("../auth/");
@@ -55,4 +59,8 @@ gulp.task('install_auth', () => {
 
 gulp.task('install_webapp', () => {
   npm_install("../webapp/");
+});
+
+gulp.task('install_bank', () => {
+  npm_install("../bank/");
 });
