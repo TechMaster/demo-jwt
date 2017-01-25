@@ -13,7 +13,8 @@
   <b><a href="javascript:getListCIAagent()">List of CIA agents</a></b>
   <ul id="agents">
   </ul>
-  <b><a href="javascript:getBankAccount()">Password of top billionares in the world</a></b> (Call to other micro-service)<br><br>
+  <b><a href="javascript:getBankAccount()">Password of top billionares in the
+      world</a></b> (Call to other micro-service)<br><br>
   <ul id="bank">
   </ul>
   <button onclick="window.location.href ='/logout'">Logout</button>
@@ -38,14 +39,17 @@
 <script>
   function getListCIAagent() {
 
-    postRequest('/secret', {}, function (response) {
+    postRequest('/secret', {}, function (status, response) {
 
       var ul = document.getElementById("agents");
       ul.innerHTML = '';
-      for (var i = 0; i < response.length; i++) {
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(response[i].name));
-        ul.appendChild(li);
+
+      if (status == 200) {
+        for (var i = 0; i < response.length; i++) {
+          var li = document.createElement("li");
+          li.appendChild(document.createTextNode(response[i].name));
+          ul.appendChild(li);
+        }
       }
 
     });
@@ -53,13 +57,16 @@
 
   function getBankAccount() {
 
-    getRequest('http://localhost:3002/bank', function (response) {
+    getRequest('http://localhost:3002/bank', function (status, response) {
       var ul = document.getElementById("bank");
       ul.innerHTML = '';
-      for (var i = 0; i < response.length; i++) {
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(`${response[i].name} - ${response[i].balance}`));
-        ul.appendChild(li);
+      if (status == 200) {
+
+        for (var i = 0; i < response.length; i++) {
+          var li = document.createElement("li");
+          li.appendChild(document.createTextNode(`${response[i].name} - ${response[i].balance}`));
+          ul.appendChild(li);
+        }
       }
 
     });

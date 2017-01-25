@@ -11,9 +11,11 @@ const passportJWT = require("passport-jwt");
 const ExtractJwt = passportJWT.ExtractJwt;
 const JwtStrategy = passportJWT.Strategy;
 
-const jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-jwtOptions.secretOrKey = 'tasmanianDevil';
+const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeader(),
+  secretOrKey : 'tasmanianDevil',
+  issuer: 'http://localhost:3001'
+};
 
 const users = [
   {
@@ -83,9 +85,21 @@ app.post("/login", (req, res) => {
   if (user.password === password) {
     // from now on we'll identify the user by the id and the id is the only personalized value that goes into our token
     const payload = {id: user.id};
-    const token = jwt.sign(payload, jwtOptions.secretOrKey);  //Ký vào payload sử dụng secretOrKey
+    //const token = jwt.sign(payload, jwtOptions.secretOrKey);  //Ký vào payload sử dụng secretOrKey
 
-    res.json({token: token, avatar: user.avatar, group: "customer", app: "webapp"});  //và trả về
+    const options = {
+      issuer: 'http://localhost:3001',
+      subject: 'secret micro service',
+      expiresIn: 20 //Expire in 20 seconds
+    };
+    jwt.sign(payload, jwtOptions.secretOrKey, options, (err, token) => {
+      if (err) {
+        res.status(401).json({message: "Fail to generate jwt token"});
+      } else {
+        res.json({token: token, avatar: user.avatar, group: "customer", app: "webapp"});  //và trả về
+      }
+    });
+
   } else {
     res.status(401).json({message: "passwords did not match"});
   }

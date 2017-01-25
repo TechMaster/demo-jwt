@@ -10,8 +10,14 @@ function postRequest(url, data, func) {
   }
 
   xhr.addEventListener('load', function () {
-    xhr.responseJSON = JSON.parse(xhr.responseText);
-    func(xhr.responseJSON);
+    var result;
+    if (xhr.status == 200) {
+      result = xhr.responseJSON = JSON.parse(xhr.responseText);
+    } else {
+      result = {};
+    }
+
+    func(xhr.status, result);
   });
 
   xhr.send(JSON.stringify(data));
@@ -31,8 +37,14 @@ function getRequest(url, func) {
   }
 
   xhr.addEventListener('load', function () {
-    xhr.responseJSON = JSON.parse(xhr.responseText);
-    func(xhr.responseJSON);
+    var result;
+    if (xhr.status == 200) {
+      result = xhr.responseJSON = JSON.parse(xhr.responseText);
+    } else {
+      result = {};
+    }
+
+    func(xhr.status, result);
   });
 
   xhr.send();

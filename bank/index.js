@@ -53,7 +53,6 @@ app.get("/bank", passport.authenticate('jwt', {session: false}), (req, res) => {
     {name: "Steve Jobs", balance: 800},
     {name: "Donald Trump", balance: 999}
     ];
-  console.log('received!');
   res.json(bankaccounts);
 });
 

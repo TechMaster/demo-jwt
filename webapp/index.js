@@ -15,7 +15,7 @@ const JwtStrategy = passportJWT.Strategy;
 
 //https://codeforgeek.com/2014/09/manage-session-using-node-js-express-4/
 const session = require('express-session');
-app.use(session({secret: 'JackCodeHammer', resave: false, saveUninitialized: true, cookie: { secure: true }}));
+app.use(session({secret: 'JackCodeHammer', resave: false, saveUninitialized: true, cookie: {secure: true}}));
 
 //Cấu hình nunjucks
 nunjucks.configure('views', {
@@ -34,11 +34,16 @@ const strategy = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
   // Đoạn này sẽ phải gọi sang auth app
   let id = jwt_payload.id;
 
-  request.get({url: `http://localhost:3001/getuser/${id}`, json: true},
-    (err, response, body) => {
-      next(null, body);
-    }
-  );
+
+  if (Math.floor(Date.now() / 1000) < jwt_payload.exp) { //JWT token is not expired
+    request.get({url: `http://localhost:3001/getuser/${id}`, json: true},
+      (err, response, body) => {
+        next(null, body);
+      }
+    );
+  } else {
+    console.log('JWT token is expired');
+  }
 });
 
 app.use('/public', express.static('public'));
@@ -51,6 +56,8 @@ app.use(passport.initialize());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+
 
 // Set Nunjucks as rendering engine for pages with .html suffix
 app.engine('html', nunjucks.render);
@@ -76,7 +83,7 @@ app.get('/login', (req, res) => {
   res.render('login.html', {login: false});
 });
 
-
+//Hứng sự kiện login của user
 app.post("/", (req, res) => {
   //Call to Auth service
   request.post({
@@ -91,6 +98,8 @@ app.post("/", (req, res) => {
         let data = JSON.parse(body);
         let session = req.session;
         session.login = true;
+
+        //JWT token được trả về browser ở tham số token. Browser sẽ lưu token sử dụng HTML5 storage
         res.render('index.html', {login: true, name: req.body.name, avatar: data.avatar, token: data.token});
       } else {
         res.render('index.html', {login: false});
