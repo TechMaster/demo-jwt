@@ -20,10 +20,13 @@
 {% else %}
   <b>Login to get list of CIA agents</b>
   <form method="POST" action="/">
-    username: <input type="text" name="name"><br/>
-    password: <input type="text" name="password">
+    <label for="name">Name: </label><input type="text" name="name" id="name"><br/>
+    <label for="name">Password: </label><input type="text" name="password" id="password">
     <input type="submit" value="Login">
   </form>
+  <div>
+
+  </div>
 {% endif %}
 
 {% if token %}

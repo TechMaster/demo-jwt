@@ -72,6 +72,9 @@ app.post('/callback', (req, res) => {
 
 });
 
+app.get('/login', (req, res) => {
+  res.render('login.html', {login: false});
+});
 
 
 app.post("/", (req, res) => {

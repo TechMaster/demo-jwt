@@ -38,3 +38,6 @@ post webtoken vào http://localhost:3000/callback, sau đó trả web token cho 
 Ở microservice bank, có các request từ các server khác domain do đó phải bật CORS.
 - [https://npmjs.org/package/cors](https://github.com/expressjs/cors)
 
+# Gợi ý nâng cấp
+Giao diện quá xấu hãy dùng Bootstrap để tút tát lại. Xem
+http://localhost:3000/login
