@@ -1,6 +1,7 @@
 # Demo authentication service sử dụng JWT
 
 Có 4 thư mục:
+
 1. gulp để lưu file gulpfile.js để tự động hóa. Tham khảo thêm ví dụ tự động hóa [gulp_npm_start](https://github.com/TechMaster/gulp_npm_start)
 2. auth, http://localhost:3001, micro-service làm nhiệm vụ authenticate user và trả lời web token
     - /login  đăng nhập login user, password
@@ -22,6 +23,10 @@ cd jwtservice/gulp
 gulp install
 gulp
 ```
+```gulp install``` sẽ cài đặt module cần thiết cho auth, webapp, bank.
+
+```gulp``` sẽ chạy lệnh npm start ở auth, bank và web app.
+
 
 1. Dùng browser vào http://localhost:3000, đăng nhập với một trong các tài khoản:
     - admin/admin
