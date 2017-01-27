@@ -42,6 +42,8 @@ const strategy = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
       }
     );
   } else {
+    let session = req.session;
+    session.login = false;
     console.log('JWT token is expired');
   }
 });
