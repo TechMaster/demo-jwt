@@ -19,13 +19,13 @@ Có 4 thư mục:
 
 ```
 git clone https://github.com/TechMaster/jwtservice
-cd jwtservice/gulp
-gulp install
-gulp
+cd jwtservice
+npm install
+npm start
 ```
-```gulp install``` sẽ cài đặt module cần thiết cho auth, webapp, bank.
+```npm install``` sẽ cài đặt module cần thiết cho auth, webapp, bank.
 
-```gulp``` sẽ chạy lệnh npm start ở auth, bank và web app.
+```npm start``` sẽ chạy lệnh npm start ở auth, bank và web app.
 
 
 1. Dùng browser vào http://localhost:3000, đăng nhập với một trong các tài khoản:

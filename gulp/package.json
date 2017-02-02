@@ -4,7 +4,8 @@
   "description": "Use Gulp to start Node.js microservices in demo",
   "main": "index.js",
   "scripts": {
-    "test": "mocha -s"
+    "start": "gulp",
+    "install": "gulp install"
   },
   "keywords": [
     "gulp",

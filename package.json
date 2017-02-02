@@ -1,0 +1,15 @@
+{
+  "name": "auto_start_gulp",
+  "version": "1.0.0",
+  "description": "Use Gulp to start Node.js microservices in demo",
+  "scripts": {
+    "start": "npm start --prefix gulp/",
+    "install": "npm install --prefix gulp/"
+  },
+  "keywords": [
+    "gulp",
+    "automation"
+  ],
+  "author": "Trịnh Minh Cường",
+  "license": "MIT"
+}
