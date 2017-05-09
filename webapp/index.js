@@ -79,7 +79,7 @@ app.set('view engine', 'html');
 app.get('/', (req, res) => {
   let session = req.session;
   if (session.login === true) {
-    res.render('index.html', {login: true});
+    res.render('index.html', {login: true, name: req.session.user.name, avatar: req.session.user.avatar });
   } else {
     res.render('index.html', {login: false});
   }
@@ -112,6 +112,7 @@ app.post("/", (req, res) => {
         session.login = true;
 
         //JWT token được trả về browser ở tham số token. Browser sẽ lưu token sử dụng HTML5 storage
+        req.session.user = {name: req.body.name, avatar: data.avatar};
         res.render('index.html', {login: true, name: req.body.name, avatar: data.avatar, token: data.token});
       } else {
         res.render('index.html', {login: false});
