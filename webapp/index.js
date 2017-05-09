@@ -14,8 +14,16 @@ const JwtStrategy = passportJWT.Strategy;
 
 
 //https://codeforgeek.com/2014/09/manage-session-using-node-js-express-4/
+const cookieParser = require('cookie-parser')
+app.use(cookieParser())
+
 const session = require('express-session');
-app.use(session({secret: 'JackCodeHammer', resave: false, saveUninitialized: true, cookie: {secure: true}}));
+app.use(session({
+  secret: 'JackCodeHammer', 
+  resave: false, 
+  saveUninitialized: true, 
+  cookie: {secure: false}
+}))
 
 //Cấu hình nunjucks
 nunjucks.configure('views', {
@@ -23,19 +31,21 @@ nunjucks.configure('views', {
   cache: false,
   express: app,
   watch: true
-});
+})
 
 
 const jwtOptions = {};
 jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
 jwtOptions.secretOrKey = 'tasmanianDevil';
 
+//Đây là hàm decode JWT token
 const strategy = new JwtStrategy(jwtOptions, (jwt_payload, next) => {
   // Đoạn này sẽ phải gọi sang auth app
   let id = jwt_payload.id;
 
 
   if (Math.floor(Date.now() / 1000) < jwt_payload.exp) { //JWT token is not expired
+    //Call to authentication service
     request.get({url: `http://localhost:3001/getuser/${id}`, json: true},
       (err, response, body) => {
         next(null, body);
@@ -109,7 +119,8 @@ app.post("/", (req, res) => {
     });
 });
 
-
+//Hàm này yêu cầu bảo mật, có một middle ware đứng giữa passport.authenticate
+//Session = false để lần nào request cũng phải authenticate chứ không kiểm tra user có trong session
 app.post("/secret", passport.authenticate('jwt', {session: false}), (req, res) => {
   const agents = [{name: "John Borokovic"}, {name: "Tim Henderson"}, {name: "Skiel Ivanovik"}];
   res.json(agents);
